@@ -204,11 +204,11 @@ def get_user_allergies():
     return allergies
 
 
-st.write("Enter your personal information:")
+st.write("Enter your information:")
 name = st.text_input("Enter your name")
-age = st.number_input("Enter your age", step=1, value=20)
-weight = st.number_input("Enter your weight (kg)", value=51)
-height = st.number_input("Enter your height (cm)", value=169)
+age = st.number_input("Enter your age", step=1, value=0)
+weight = st.number_input("Enter your weight (kg)", value=0)
+height = st.number_input("Enter your height (cm)", value=0)
 gender = st.radio("Choose your gender:", ["Male", "Female"])
 
 
@@ -238,14 +238,11 @@ def generate_items_list_gh(target_calories, food_groups):
     selected_items = []
     total_items = set()
 
-    # Collect all available food items from the food_groups dictionary
     for foods in food_groups.values():
         total_items.update(foods.keys())
 
-    # Create a list of food items sorted by calorie-to-value ratio in descending order
     sorted_items = sorted(total_items, key=lambda item: food_groups[item] / item, reverse=True)
 
-    # Greedy selection using the sorted_items list
     for item in sorted_items:
         cals = food_groups[item]
         if calories + cals <= target_calories:
@@ -273,8 +270,11 @@ pre_dinner = "Here the example but use your own creativity to generate based on 
 end_text = "Remember, hydration is key to staying refreshed and energized throughout the day. So, keep a glass of water handy and sip it to your heart's content. Get ready to savor this extraordinary culinary experience and let your taste buds dance with joy. Enjoy your meals and have a fantastic day!"
 
 example_response = f"This is just an example but use your creativity: You can start with, Hello {name}! I'm thrilled to be your meal planner for the day, and I've crafted a delightful and flavorful meal plan just for you. But fear not, this isn't your ordinary, run-of-the-mill meal plan. It's a culinary adventure designed to keep your taste buds excited while considering the calories you can intake. So, get ready!"
+example_response_l = f"This is just an example but use your creativity: You can start with, I'm thrilled to be your Lunch planner, and I've crafted a delightful and flavorful meal plan just for you. But fear not, this isn't your ordinary, run-of-the-mill meal plan. It's a culinary adventure designed to keep your taste buds excited while considering the calories you can intake."
 
-negative_prompt = "Do not include instruction to prepare the meal. I want only the name of the meal and the ingredients used in the meal. You your master chef cooking skills to generate the meal."
+example_response_d = f"This is just an example but use your creativity: You can start with, I'm thrilled to be your dinner, and I've crafted a delightful and flavorful meal plan just for you. But fear not, this isn't your ordinary, run-of-the-mill meal plan. It's a culinary adventure designed to keep your taste buds excited while considering the calories you can intake."
+
+negative_prompt = "Do not include instruction to prepare the meal. I want only the name of the meal and the ingredients used in the meal and explaining the dish you suggested and spill some nutritious knowledge. You your master chef cooking skills to generate the meals. You can be as precise as possible."
 
 generate_items = st.button("Generate Meal Plan")
 if generate_items:
@@ -303,21 +303,21 @@ if generate_items:
 
     completion = anthropic.completions.create(
         model="claude-1",
-        max_tokens_to_sample=1000,
+        max_tokens_to_sample=2000,
         prompt=f"{HUMAN_PROMPT}{pre_prompt_b}{str(meal_items_morning)}{example_response}{pre_breakfast}{negative_prompt}{AI_PROMPT}",
     )
     out_b = completion.completion
     st.write(out_b)
     completion = anthropic.completions.create(
         model="claude-1",
-        max_tokens_to_sample=1000,
+        max_tokens_to_sample=2000,
         prompt=f"{HUMAN_PROMPT}{pre_prompt_l}{str(meal_items_lunch)}{pre_lunch}{negative_prompt}{AI_PROMPT}",
     )
     out_l = completion.completion
     st.write(out_l)
     completion = anthropic.completions.create(
         model="claude-1",
-        max_tokens_to_sample=1000,
+        max_tokens_to_sample=2000,
         prompt=f"{HUMAN_PROMPT}{pre_prompt_d}{str(meal_items_dinner)}{pre_dinner}{negative_prompt}{AI_PROMPT}",
     )
     out_d = completion.completion

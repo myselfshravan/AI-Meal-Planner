@@ -1,0 +1,58 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="529" name="Python" />
+      </Languages>
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="13">
+            <item index="0" class="java.lang.String" itemvalue="beautifulsoup4" />
+            <item index="1" class="java.lang.String" itemvalue="pandas" />
+            <item index="2" class="java.lang.String" itemvalue="streamlit" />
+            <item index="3" class="java.lang.String" itemvalue="requests" />
+            <item index="4" class="java.lang.String" itemvalue="requests-oauthlib" />
+            <item index="5" class="java.lang.String" itemvalue="selenium" />
+            <item index="6" class="java.lang.String" itemvalue="threadpoolctl" />
+            <item index="7" class="java.lang.String" itemvalue="requests-file" />
+            <item index="8" class="java.lang.String" itemvalue="PyYAML" />
+            <item index="9" class="java.lang.String" itemvalue="typing_extensions" />
+            <item index="10" class="java.lang.String" itemvalue="plotly" />
+            <item index="11" class="java.lang.String" itemvalue="xlrd" />
+            <item index="12" class="java.lang.String" itemvalue="scraper" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E501" />
+          <option value="E701" />
+          <option value="W191" />
+          <option value="E101" />
+          <option value="E402" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N803" />
+          <option value="N806" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="sis.roll" />
+          <option value="list.__getitem__" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

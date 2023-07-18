@@ -85,7 +85,6 @@ def knapsack(target_calories, food_groups):
             else:
                 dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - value] + value)
 
-    # Find the selected items
     selected_items = []
     j = target_calories
     for i in range(n, 0, -1):
@@ -140,7 +139,7 @@ if generate_items:
         my_bar.progress(percent_complete + 1, text=progress_text)
 
     st.markdown("""---""")
-    st.write("Breakfast")
+    st.subheader("Breakfast")
     completion = anthropic.completions.create(
         model="claude-1",
         max_tokens_to_sample=2000,
@@ -150,7 +149,7 @@ if generate_items:
     st.write(out_b)
 
     st.markdown("""---""")
-    st.write("Lunch")
+    st.subheader("Lunch")
     completion = anthropic.completions.create(
         model="claude-1",
         max_tokens_to_sample=2000,
@@ -160,7 +159,7 @@ if generate_items:
     st.write(out_l)
 
     st.markdown("""---""")
-    st.write("Dinner")
+    st.subheader("Dinner")
     completion = anthropic.completions.create(
         model="claude-1",
         max_tokens_to_sample=2000,
@@ -170,4 +169,4 @@ if generate_items:
     st.write(out_d)
     st.write(end_text)
 
-    st.write("Thank you for using our app! We hope you enjoyed it!")
+    st.write("Thank you for using our AI app! We hope you enjoyed it!")

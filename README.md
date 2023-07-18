@@ -1,4 +1,4 @@
-# Meal Planner App
+# AI Meal Planner App
 
 This project is a meal planning app that generates personalized meal plans based on a user's caloric needs and food
 preferences. It utilizes natural language processing to generate creative meal ideas using ingredients selected by the
@@ -27,6 +27,9 @@ algorithm.
 - Checking if adding that item would exceed the calorie target.
 - If not, adding the item to the selected ingredients list.
 - Repeating steps 2-5 until the calories are within 10 of the target or all items are selected.
+
+### The goal is to select a set of food items that maximize calories, while not exceeding the target calories. This is similar to the knapsack problem.
+
 
 ---
 

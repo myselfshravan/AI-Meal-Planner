@@ -19,10 +19,10 @@ st.write(
     "This is a knowledge based meal planner that uses a persons information. The planner can be used to find a meal plan that satisfies the user's calorie and macronutrient requirements.")
 
 st.write("Enter your information:")
-name = st.text_input("Enter your name", value="John Doe")
-age = st.number_input("Enter your age", step=1, value=20)
-weight = st.number_input("Enter your weight (kg)", value=52)
-height = st.number_input("Enter your height (cm)", value=170)
+name = st.text_input("Enter your name")
+age = st.number_input("Enter your age", step=1)
+weight = st.number_input("Enter your weight (kg)")
+height = st.number_input("Enter your height (cm)")
 gender = st.radio("Choose your gender:", ["Male", "Female"])
 example_response = f"This is just an example but use your creativity: You can start with, Hello {name}! I'm thrilled to be your meal planner for the day, and I've crafted a delightful and flavorful meal plan just for you. But fear not, this isn't your ordinary, run-of-the-mill meal plan. It's a culinary adventure designed to keep your taste buds excited while considering the calories you can intake. So, get ready!"
 

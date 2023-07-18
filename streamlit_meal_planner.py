@@ -98,7 +98,8 @@ def knapsack(target_calories, food_groups):
 
 
 bmr = calculate_bmr(weight, height, age, gender)
-st.subheader(f"Your daily intake needs to have: {bmr} calories")
+round_bmr = round(bmr, 2)
+st.subheader(f"Your daily intake needs to have: {round_bmr} calories")
 choose_algo = st.selectbox("Choose your algorithm", ["Random Greedy", "Knapsack"])
 generate_items = st.button("Generate Meal Plan")
 if generate_items:

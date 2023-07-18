@@ -19,6 +19,17 @@ algorithm.
 - Pandas for data manipulation
 - Anthropic Claude API for NLP completions
 
+## Random greedy algorithm 
+
+- Calculating the target calories for breakfast, lunch, and dinner based on the user's BMR.
+- Randomly selecting a food group (e.g. fruits, proteins etc).
+- Randomly selecting a food item from that group.
+- Checking if adding that item would exceed the calorie target.
+- If not, adding the item to the selected ingredients list.
+- Repeating steps 2-5 until the calories are within 10 of the target or all items are selected.
+
+---
+
 The app calculates the user's basal metabolic rate to determine their daily calorie needs. It then randomly selects
 ingredients from categorized food items to meet the calorie targets for each meal. The selected ingredients are passed
 to the Claude AI to generate creative names and descriptions for the meals.

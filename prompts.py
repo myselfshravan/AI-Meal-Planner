@@ -16,4 +16,4 @@ example_response_l = f"This is just an example but use your creativity: You can 
 
 example_response_d = f"This is just an example but use your creativity: You can start with, I'm thrilled to be your dinner, and I've crafted a delightful and flavorful meal plan just for you. But fear not, this isn't your ordinary, run-of-the-mill meal plan. It's a culinary adventure designed to keep your taste buds excited while considering the calories you can intake."
 
-negative_prompt = "Do not include instruction to prepare the meal. I want only the name of the meal and the ingredients used in the meal and explaining the dish you suggested and spill some nutritious knowledge. You your master chef cooking skills to generate the meals. You can be as precise as possible."
+negative_prompt = "Do not include instruction to prepare the meal. I want only the name of the meal and the ingredients used in the meal and explaining the dish you suggested and spill some nutritious knowledge. You your master chef cooking skills to generate the meals. I request you to keep your response within 100 to 150 words."

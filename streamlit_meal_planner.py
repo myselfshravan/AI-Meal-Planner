@@ -13,10 +13,10 @@ anthropic = Anthropic(api_key=ANTHROPIC_API_KEY)
 
 st.set_page_config(page_title="AI - Meal Planner", page_icon="🍴")
 
-st.title("Knowledge based Meal Planner")
+st.title("AI Meal Planner")
 
 st.write(
-    "This is a knowledge based meal planner that uses a persons information. The planner can be used to find a meal plan that satisfies the user's calorie and macronutrient requirements.")
+    "This is a AI based meal planner that uses a persons information. The planner can be used to find a meal plan that satisfies the user's calorie and macronutrient requirements.")
 
 st.write("Enter your information:")
 name = st.text_input("Enter your name")
@@ -99,7 +99,7 @@ def knapsack(target_calories, food_groups):
 bmr = calculate_bmr(weight, height, age, gender)
 round_bmr = round(bmr, 2)
 st.subheader(f"Your daily intake needs to have: {round_bmr} calories")
-choose_algo = st.selectbox("Choose your algorithm", ["Random Greedy", "Knapsack"])
+choose_algo = "Knapsack"
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
 
@@ -149,7 +149,7 @@ if st.session_state.clicked:
         st.markdown("""---""")
         st.subheader("Breakfast")
         completion = anthropic.completions.create(
-            model="claude-1",
+            model="claude-1.2",
             max_tokens_to_sample=1000,
             prompt=f"{HUMAN_PROMPT}{pre_prompt_b}{str(meal_items_morning)}{example_response}{pre_breakfast}{negative_prompt}{AI_PROMPT}",
         )
@@ -159,7 +159,7 @@ if st.session_state.clicked:
         st.markdown("""---""")
         st.subheader("Lunch")
         completion = anthropic.completions.create(
-            model="claude-1",
+            model="claude-1.2",
             max_tokens_to_sample=1000,
             prompt=f"{HUMAN_PROMPT}{pre_prompt_l}{str(meal_items_lunch)}{pre_lunch}{negative_prompt}{AI_PROMPT}",
         )
@@ -169,7 +169,7 @@ if st.session_state.clicked:
         st.markdown("""---""")
         st.subheader("Dinner")
         completion = anthropic.completions.create(
-            model="claude-1",
+            model="claude-1.2",
             max_tokens_to_sample=1000,
             prompt=f"{HUMAN_PROMPT}{pre_prompt_d}{str(meal_items_dinner)}{pre_dinner}{negative_prompt}{AI_PROMPT}",
         )

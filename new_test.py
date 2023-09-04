@@ -1,6 +1,7 @@
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from dataclasses import dataclass
+import streamlit as st
 
 nltk.download('vader_lexicon')
 sia = SentimentIntensityAnalyzer()
@@ -34,16 +35,18 @@ def get_mood(input_text: str) -> Mood:
     return Mood(emoji, sentiment, sentiment_score)
 
 
-if __name__ == "__main__":
-    while True:
-        text: str = input("Enter some text (or type 'exit' to quit): ")
+st.title("Sentiment Analysis Chatbot")
 
-        if text.lower() == 'exit':
-            break
+text = st.chat_input("Enter some text... ")
 
-        try:
-            mood: Mood = get_mood(text)
-            print(f"Mood: {mood.emoji} ({mood.sentiment.capitalize()})")
-            print(f"Score: {mood.score:.2f}")
-        except Exception as e:
-            print(f"An error occurred: {str(e)}")
+if text:
+    try:
+        mood: Mood = get_mood(text)
+        mood_result = f"Mood: {mood.emoji} : {mood.sentiment.capitalize()}"
+        score_result = f"Score: {mood.score:.3f}"
+        st.subheader(f"Result for: {text}")
+        st.subheader(mood_result)
+        st.subheader(score_result)
+
+    except Exception as e:
+        st.write(f"An error occurred: {str(e)}")

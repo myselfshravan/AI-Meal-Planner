@@ -1,5 +1,6 @@
 from textblob import TextBlob
 from dataclasses import dataclass
+import streamlit as st
 
 
 @dataclass
@@ -22,9 +23,16 @@ def get_mood(input_text: str, *, threshold: float) -> Mood:
         return Mood("😐", sentiment)
 
 
-if __name__ == "__main__":
-    while True:
-        text: str = input("Enter some text: ")
-        mood: Mood = get_mood(text, threshold=0.3)
+st.title("Sentiment Analysis Chatbot")
 
-        print(f"Mood: {mood.emoji} ({mood.sentiment})")
+text = st.chat_input("Enter some text... ")
+
+if text:
+    try:
+        mood: Mood = get_mood(text, threshold=0.05)
+        mood_result = f"Mood: {mood.emoji} : {mood.sentiment:.2f}"
+        st.subheader(f"Result for: {text}")
+        st.subheader(mood_result)
+
+    except Exception as e:
+        st.write(f"An error occurred: {str(e)}")

@@ -1,15 +1,20 @@
 import streamlit as st
 import pandas as pd
 from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+import openai
 import random
 import time
 from data import food_items_breakfast, food_items_lunch, food_items_dinner
 from prompts import pre_prompt_b, pre_prompt_l, pre_prompt_d, pre_breakfast, pre_lunch, pre_dinner, end_text, \
     example_response_l, example_response_d, negative_prompt
 
-ANTHROPIC_API_KEY = st.secrets["apikey"]
+# ANTHROPIC_API_KEY = st.secrets["apikey"]
+OPEN_AI_API_KEY = st.secrets["apikey"]
 
-anthropic = Anthropic(api_key=ANTHROPIC_API_KEY)
+openai.api_key = OPEN_AI_API_KEY
+
+# anthropic = Anthropic(api_key=ANTHROPIC_API_KEY)
+
 
 st.set_page_config(page_title="AI - Meal Planner", page_icon="🍴")
 
@@ -148,36 +153,39 @@ if st.session_state.clicked:
             my_bar.progress(percent_complete + 1, text=progress_text)
         st.markdown("""---""")
         st.subheader("Breakfast")
-        completion = anthropic.completions.create(
-            model="claude-1.2",
-            max_tokens_to_sample=1000,
+        completion = openai.Completion.create(
+            model="text-davinci-003",
+            max_tokens=100,
+            temperature=0,
             prompt=f"{HUMAN_PROMPT}{pre_prompt_b}{str(meal_items_morning)}{example_response}{pre_breakfast}{negative_prompt}{AI_PROMPT}",
         )
-        out_b = completion.completion
+        out_b = completion.choices[0].text
         st.write(out_b)
 
         st.markdown("""---""")
         st.subheader("Lunch")
-        completion = anthropic.completions.create(
-            model="claude-1.2",
-            max_tokens_to_sample=1000,
+        completion = openai.Completion.create(
+            model="text-davinci-003",
+            max_tokens=100,
+            temperature=0,
             prompt=f"{HUMAN_PROMPT}{pre_prompt_l}{str(meal_items_lunch)}{pre_lunch}{negative_prompt}{AI_PROMPT}",
         )
-        out_l = completion.completion
+        out_l = completion.choices[0].text
         st.write(out_l)
 
         st.markdown("""---""")
         st.subheader("Dinner")
-        completion = anthropic.completions.create(
-            model="claude-1.2",
-            max_tokens_to_sample=1000,
+        completion = openai.Completion.create(
+            model="text-davinci-003",
+            max_tokens=100,
+            temperature=0,
             prompt=f"{HUMAN_PROMPT}{pre_prompt_d}{str(meal_items_dinner)}{pre_dinner}{negative_prompt}{AI_PROMPT}",
         )
-        out_d = completion.completion
+        out_d = completion.choices[0].text
         st.write(out_d)
         st.write(end_text)
 
-        st.write("Thank you for using our AI app! We hope you enjoyed it!")
+        st.write("Thank you for using our AI app! I hope you enjoyed it!")
 hide_streamlit_style = """
                     <style>
                     # MainMenu {visibility: hidden;}

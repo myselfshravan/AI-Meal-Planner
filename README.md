@@ -10,7 +10,7 @@ algorithm.
 - Selection of user food preferences and allergies/restrictions
 - Generation of meal plans for breakfast, lunch, and dinner within the target calorie ranges
 - Creative naming and description of meals using natural language generation
-- Meal Generation using Anthropic's Claude AI assistant
+- Meal Generation using Anthropic Claude AI assistant
 
 ## Technology
 
@@ -18,6 +18,32 @@ algorithm.
 - Streamlit for app UI
 - Pandas for data manipulation
 - Anthropic Claude API for NLP completions
+
+## Installation
+
+Clone the repository and install the dependencies using pipenv:
+
+```bash
+git clone
+cd ai-meal-planner
+pipenv install
+```
+
+## Usage
+
+Run the app using streamlit:
+
+```bash
+streamlit run streamlit_meal_planner.py
+```
+
+Add your API key to `.streamlit/secrets.toml`:
+
+```bash
+anthropic_apikey="YOUR_API_KEY"
+openai_apikey="YOUR_API_KEY"
+```
+
 
 ## Random greedy algorithm 
 

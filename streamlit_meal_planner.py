@@ -114,6 +114,16 @@ def click_button():
     st.session_state.clicked = True
 
 
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "mistralai/Mistral-7B-Instruct-v0.1"
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
 st.button("Create a Basket", on_click=click_button)
 if st.session_state.clicked:
     calories_breakfast = round((bmr * 0.5), 2)
@@ -147,60 +157,59 @@ if st.session_state.clicked:
         st.write("Total Calories: " + str(cal_d))
 
     if st.button("Generate Meal Plan"):
-        # progress_text = "You personalised meal is being generated based on the items in the basket. Please wait..."
-        # my_bar = st.progress(0, text=progress_text)
-        # for percent_complete in range(100):
-        #     time.sleep(0.1)
-        #     my_bar.progress(percent_complete + 1, text=progress_text)
         st.markdown("""---""")
         st.subheader("Breakfast")
         user_content = pre_prompt_b + str(meal_items_morning) + example_response + pre_breakfast + negative_prompt
-        completion = openai.ChatCompletion.create(
-            model="mistralai/Mistral-7B-Instruct-v0.1",
-            max_tokens=300,
-            temperature=0.5,
-            # prompt=f"{HUMAN_PROMPT}{pre_prompt_b}{str(meal_items_morning)}{example_response}{pre_breakfast}{negative_prompt}{AI_PROMPT}",
-            messages=[{"role": "system",
-                       "content": "You are a helpful assistant. You are a master Chief. You are an expert Nutritionist. You are a personal trainer."},
-                      {"role": "user", "content": user_content}],
-        )
-
-        out_b = completion["choices"][0]["message"]["content"]
-        st.write(out_b)
+        temp_messages = [{"role": "user", "content": user_content}]
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                    model=st.session_state["openai_model"],
+                    messages=temp_messages,
+                    stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append(
+            {"role": "assistant", "content": full_response})
 
         st.markdown("""---""")
         st.subheader("Lunch")
         user_content = pre_prompt_l + str(meal_items_lunch) + example_response + pre_lunch + negative_prompt
-        completion = openai.ChatCompletion.create(
-            model="mistralai/Mistral-7B-Instruct-v0.1",
-            max_tokens=300,
-            temperature=0.5,
-            # prompt=f"{HUMAN_PROMPT}{pre_prompt_l}{str(meal_items_lunch)}{example_response}{pre_lunch}{negative_prompt}{AI_PROMPT}",
-            messages=[{"role": "system",
-                       "content": "You are a helpful assistant. You are a master Chief. You are an expert Nutritionist. You are a personal trainer."},
-                      {"role": "user", "content": user_content}],
-        )
-
-        out_l = completion["choices"][0]["message"]["content"]
-        st.write(out_l)
+        temp_messages = [{"role": "user", "content": user_content}]
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                    model=st.session_state["openai_model"],
+                    messages=temp_messages,
+                    stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append(
+            {"role": "assistant", "content": full_response})
 
         st.markdown("""---""")
         st.subheader("Dinner")
         user_content = pre_prompt_d + str(meal_items_dinner) + example_response + pre_dinner + negative_prompt
-        completion = openai.ChatCompletion.create(
-            model="mistralai/Mistral-7B-Instruct-v0.1",
-            max_tokens=300,
-            temperature=0.5,
-            # prompt=f"{HUMAN_PROMPT}{pre_prompt_d}{str(meal_items_dinner)}{example_response}{pre_dinner}{negative_prompt}{AI_PROMPT}",
-            messages=[{"role": "system",
-                       "content": "You are a helpful assistant. You are a master Chief. You are an expert Nutritionist. You are a personal trainer."},
-                      {"role": "user", "content": user_content}],
-        )
-
-        out_d = completion["choices"][0]["message"]["content"]
-        st.write(out_d)
-        st.write(end_text)
-
+        temp_messages = [{"role": "user", "content": user_content}]
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                    model=st.session_state["openai_model"],
+                    messages=temp_messages,
+                    stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append(
+            {"role": "assistant", "content": full_response})
         st.write("Thank you for using our AI app! I hope you enjoyed it!")
 hide_streamlit_style = """
                     <style>

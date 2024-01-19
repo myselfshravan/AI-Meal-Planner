@@ -20,6 +20,7 @@ openai.api_base = "https://api.endpoints.anyscale.com/v1"
 st.set_page_config(page_title="AI - Meal Planner", page_icon="🍴")
 
 st.title("AI Meal Planner")
+st.divider()
 
 st.write(
     "This is a AI based meal planner that uses a persons information. The planner can be used to find a meal plan that satisfies the user's calorie and macronutrient requirements.")
@@ -115,7 +116,7 @@ def click_button():
 
 
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "mistralai/Mistral-7B-Instruct-v0.1"
+    st.session_state["openai_model"] = "meta-llama/Llama-2-70b-chat-hf"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -216,7 +217,7 @@ hide_streamlit_style = """
                     # MainMenu {visibility: hidden;}
                     footer {visibility: hidden;}
                     footer:after {
-                    content:'Made with Passion by Shravan and Team'; 
+                    content:'Software Engineering Project'; 
                     visibility: visible;
     	            display: block;
     	            position: relative;
@@ -224,6 +225,9 @@ hide_streamlit_style = """
     	            padding: 15px;
     	            top: 2px;
     	            }
+    	            #ai-meal-planner {
+    	              text-align: center; !important
+        	            }
                     </style>
                     """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)

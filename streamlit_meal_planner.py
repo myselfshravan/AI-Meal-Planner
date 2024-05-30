@@ -116,7 +116,7 @@ def click_button():
 
 
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "meta-llama/Llama-2-70b-chat-hf"
+    st.session_state["openai_model"] = "meta-llama/Meta-Llama-3-70B-Instruct"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -217,7 +217,7 @@ hide_streamlit_style = """
                     # MainMenu {visibility: hidden;}
                     footer {visibility: hidden;}
                     footer:after {
-                    content:'Software Engineering Project'; 
+                    content:'Built by Shravan and Team'; 
                     visibility: visible;
     	            display: block;
     	            position: relative;

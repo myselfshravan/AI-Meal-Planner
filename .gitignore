@@ -1,1 +1,12 @@
 .streamlit/secrets.toml
+WhatsAppChat.txt
+config
+random/chat_analysis.py
+random/ntest_chat.py
+random/check_models.ipynb
+random/app_flect.py
+random/gemini.py
+random/app_flect.spec
+build
+dist
+others

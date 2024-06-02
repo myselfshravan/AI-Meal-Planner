@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
-import openai
+from openai import OpenAI
 import random
 import time
 from data import food_items_breakfast, food_items_lunch, food_items_dinner
@@ -9,13 +8,13 @@ from prompts import pre_prompt_b, pre_prompt_l, pre_prompt_d, pre_breakfast, pre
     example_response_l, example_response_d, negative_prompt
 
 # ANTHROPIC_API_KEY = st.secrets["anthropic_apikey"]
-# OPEN_AI_API_KEY = st.secrets["openai_apikey"]
+OPEN_AI_API_KEY = st.secrets["openai_apikey"]
 ANYSCALE_API = st.secrets["anyscale_apikey"]
 
-openai.api_key = ANYSCALE_API
-openai.api_base = "https://api.endpoints.anyscale.com/v1"
+# openai.api_key = OPEN_AI_API_KEY
+# openai.api_base = "https://api.endpoints.anyscale.com/v1"
 
-# anthropic = Anthropic(api_key=ANTHROPIC_API_KEY)
+client = OpenAI(api_key=OPEN_AI_API_KEY)
 
 st.set_page_config(page_title="AI - Meal Planner", page_icon="🍴")
 
@@ -116,7 +115,8 @@ def click_button():
 
 
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "meta-llama/Meta-Llama-3-70B-Instruct"
+    # st.session_state["openai_model"] = "meta-llama/Meta-Llama-3-70B-Instruct"
+    st.session_state["openai_model"] = "gpt-4o"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -163,16 +163,13 @@ if st.session_state.clicked:
         user_content = pre_prompt_b + str(meal_items_morning) + example_response + pre_breakfast + negative_prompt
         temp_messages = [{"role": "user", "content": user_content}]
         with st.chat_message("assistant"):
-            message_placeholder = st.empty()
             full_response = ""
-            for response in openai.ChatCompletion.create(
-                    model=st.session_state["openai_model"],
-                    messages=temp_messages,
-                    stream=True,
-            ):
-                full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
+            response = client.chat.completions.create(
+                model=st.session_state["openai_model"],
+                messages=temp_messages,
+                stream=True,
+            )
+            st.write_stream(response)
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response})
 
@@ -181,16 +178,13 @@ if st.session_state.clicked:
         user_content = pre_prompt_l + str(meal_items_lunch) + example_response + pre_lunch + negative_prompt
         temp_messages = [{"role": "user", "content": user_content}]
         with st.chat_message("assistant"):
-            message_placeholder = st.empty()
             full_response = ""
-            for response in openai.ChatCompletion.create(
-                    model=st.session_state["openai_model"],
-                    messages=temp_messages,
-                    stream=True,
-            ):
-                full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
+            response = client.chat.completions.create(
+                model=st.session_state["openai_model"],
+                messages=temp_messages,
+                stream=True,
+            )
+            st.write_stream(response)
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response})
 
@@ -199,16 +193,13 @@ if st.session_state.clicked:
         user_content = pre_prompt_d + str(meal_items_dinner) + example_response + pre_dinner + negative_prompt
         temp_messages = [{"role": "user", "content": user_content}]
         with st.chat_message("assistant"):
-            message_placeholder = st.empty()
             full_response = ""
-            for response in openai.ChatCompletion.create(
-                    model=st.session_state["openai_model"],
-                    messages=temp_messages,
-                    stream=True,
-            ):
-                full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
+            response = client.chat.completions.create(
+                model=st.session_state["openai_model"],
+                messages=temp_messages,
+                stream=True,
+            )
+            st.write_stream(response)
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response})
         st.write("Thank you for using our AI app! I hope you enjoyed it!")

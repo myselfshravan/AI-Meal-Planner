@@ -2,7 +2,7 @@
 
 This project is a meal planning app that generates personalized meal plans based on a user's caloric needs and food
 preferences.
-It uses LLM to generate creative meal ideas using ingredients selected by the algorithm.
+It uses gpt-4o to generate creative meal ideas using ingredients selected by the algorithm.
 
 ### Try the app [here](https://ai-meal-planner.streamlit.app)
 
@@ -18,22 +18,19 @@ It uses LLM to generate creative meal ideas using ingredients selected by the al
 - Selection of user food preferences and allergies/restrictions
 - Generation of meal plans for breakfast, lunch, and dinner within the target calorie ranges with food items from
   different categories
-- Creative naming and description of meals using Llama 3 Large Language Model
-- Meal Generation but making API calls to Anyscale for getting AI Response
+- Creative naming and description of meals using GPT-4o
 
 ## Technology
 
 - Python
 - Streamlit for app UI
 - Pandas for data manipulation
-- Llama-3 70B LLM for AI text generation
+- gpt-4o for AI text generation
 
 Add your API key to `.streamlit/secrets.toml`:
 
 ```bash
-anthropic_apikey="YOUR_API_KEY"
 openai_apikey="YOUR_API_KEY"
-anyscale_apikey="YOUR_API"
 ```
 
 ## Random greedy algorithm
@@ -51,7 +48,7 @@ anyscale_apikey="YOUR_API"
 
 The app calculates the user's basal metabolic rate to determine their daily calorie needs. It then randomly selects
 ingredients from categorized food items to meet the calorie targets for each meal. The selected ingredients are passed
-to the Claude AI to generate creative names and descriptions for the meals.
+to the gpt-4o to generate creative names and descriptions for the meals.
 
-The project demonstrates an application of AI for personalized meal planning and natural language generation. It could
-be extended by adding user accounts, more food options, recipe instructions, etc.
+The project demonstrates an application of AI for personalized meal planning.
+It could be extended by adding user accounts, more food options, recipe instructions, etc.

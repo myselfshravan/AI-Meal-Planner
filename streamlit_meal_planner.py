@@ -7,14 +7,12 @@ from data import food_items_breakfast, food_items_lunch, food_items_dinner
 from prompts import pre_prompt_b, pre_prompt_l, pre_prompt_d, pre_breakfast, pre_lunch, pre_dinner, end_text, \
     example_response_l, example_response_d, negative_prompt
 
-# ANTHROPIC_API_KEY = st.secrets["anthropic_apikey"]
+ANTHROPIC_API_KEY = st.secrets["anthropic_apikey"]
 OPEN_AI_API_KEY = st.secrets["openai_apikey"]
 ANYSCALE_API = st.secrets["anyscale_apikey"]
 
-# openai.api_key = OPEN_AI_API_KEY
-# openai.api_base = "https://api.endpoints.anyscale.com/v1"
-
-client = OpenAI(api_key=OPEN_AI_API_KEY)
+api_base = "https://api.endpoints.anyscale.com/v1"
+client = OpenAI(api_key=ANYSCALE_API, base_url=api_base)
 
 st.set_page_config(page_title="AI - Meal Planner", page_icon="🍴")
 
@@ -23,6 +21,9 @@ st.divider()
 
 st.write(
     "This is a AI based meal planner that uses a persons information. The planner can be used to find a meal plan that satisfies the user's calorie and macronutrient requirements.")
+st.markdown("*Powered by Llama-3 70B*")
+
+st.divider()
 
 st.write("Enter your information:")
 name = st.text_input("Enter your name")
@@ -115,8 +116,8 @@ def click_button():
 
 
 if "openai_model" not in st.session_state:
-    # st.session_state["openai_model"] = "meta-llama/Meta-Llama-3-70B-Instruct"
-    st.session_state["openai_model"] = "gpt-4o"
+    st.session_state["openai_model"] = "meta-llama/Meta-Llama-3-70B-Instruct"
+    # st.session_state["openai_model"] = "gpt-4o"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []

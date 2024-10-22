@@ -11,6 +11,9 @@ ANTHROPIC_API_KEY = st.secrets["anthropic_apikey"]
 OPEN_AI_API_KEY = st.secrets["openai_apikey"]
 ANYSCALE_API = st.secrets["anyscale_apikey"]
 
+UNITS_CM_TO_IN = 0.393701
+UNITS_KG_TO_LB = 2.20462
+
 api_base = "https://api.endpoints.anyscale.com/v1"
 client = OpenAI(api_key=ANYSCALE_API, base_url=api_base)
 
@@ -28,8 +31,26 @@ st.divider()
 st.write("Enter your information:")
 name = st.text_input("Enter your name")
 age = st.number_input("Enter your age", step=1)
-weight = st.number_input("Enter your weight (kg)")
-height = st.number_input("Enter your height (cm)")
+
+unit_preference = st.radio("Preferred units:", ["Metric (kg, cm)", "Imperial (lb, ft + in)"])
+
+if unit_preference == "Metric (kg, cm)":
+    weight = st.number_input("Enter your weight (kg)")
+    height = st.number_input("Enter your height (cm)")
+else:
+    weight_lb = st.number_input("Enter your weight (lb)")
+    
+    # Use columns to align feet and inches inputs next to each other
+    col1, col2 = st.columns(2)
+    with col1:
+        height_ft = st.number_input("Enter your height (ft)")
+    with col2:
+        height_in = st.number_input("Enter your height (in)")
+
+    # Convert imperial to metric
+    weight = weight_lb * UNITS_LB_TO_KG
+    height = (height_ft * 12 + height_in) * UNITS_IN_TO_CM
+
 gender = st.radio("Choose your gender:", ["Male", "Female"])
 example_response = f"This is just an example but use your creativity: You can start with, Hello {name}! I'm thrilled to be your meal planner for the day, and I've crafted a delightful and flavorful meal plan just for you. But fear not, this isn't your ordinary, run-of-the-mill meal plan. It's a culinary adventure designed to keep your taste buds excited while considering the calories you can intake. So, get ready!"
 

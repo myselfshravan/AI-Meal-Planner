@@ -10,3 +10,4 @@ random/app_flect.spec
 build
 dist
 others
+__pycache__/

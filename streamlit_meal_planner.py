@@ -1,21 +1,25 @@
 import streamlit as st
 import pandas as pd
-from openai import OpenAI
+import requests
 import random
 import time
 from data import food_items_breakfast, food_items_lunch, food_items_dinner
 from prompts import pre_prompt_b, pre_prompt_l, pre_prompt_d, pre_breakfast, pre_lunch, pre_dinner, end_text, \
     example_response_l, example_response_d, negative_prompt
 
-ANTHROPIC_API_KEY = st.secrets["anthropic_apikey"]
-OPEN_AI_API_KEY = st.secrets["openai_apikey"]
-ANYSCALE_API = st.secrets["anyscale_apikey"]
-
 UNITS_CM_TO_IN = 0.393701
 UNITS_KG_TO_LB = 2.20462
 
-api_base = "https://api.endpoints.anyscale.com/v1"
-client = OpenAI(api_key=ANYSCALE_API, base_url=api_base)
+# Configure Groq API
+GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
+HEADERS = {
+    "Authorization": f"Bearer {st.secrets['GROQ_API_KEY']}",
+    "Content-Type": "application/json"
+}
+
+# Disable SSL verification warnings
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 st.set_page_config(page_title="AI - Meal Planner", page_icon="🍴")
 
@@ -137,7 +141,7 @@ def click_button():
 
 
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "meta-llama/Meta-Llama-3-70B-Instruct"
+    st.session_state["openai_model"] = "llama-3.3-70b-versatile"
     # st.session_state["openai_model"] = "gpt-4o"
 
 if "messages" not in st.session_state:
@@ -186,12 +190,19 @@ if st.session_state.clicked:
         temp_messages = [{"role": "user", "content": user_content}]
         with st.chat_message("assistant"):
             full_response = ""
-            response = client.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=temp_messages,
-                stream=True,
+            response = requests.post(
+                GROQ_API_URL,
+                headers=HEADERS,
+                json={
+                    "model": st.session_state["openai_model"],
+                    "messages": temp_messages
+                },
+                verify=False
             )
-            st.write_stream(response)
+            response_json = response.json()
+            if "choices" in response_json:
+                full_response = response_json["choices"][0]["message"]["content"]
+                st.write(full_response)
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response})
 
@@ -201,12 +212,19 @@ if st.session_state.clicked:
         temp_messages = [{"role": "user", "content": user_content}]
         with st.chat_message("assistant"):
             full_response = ""
-            response = client.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=temp_messages,
-                stream=True,
+            response = requests.post(
+                GROQ_API_URL,
+                headers=HEADERS,
+                json={
+                    "model": st.session_state["openai_model"],
+                    "messages": temp_messages
+                },
+                verify=False
             )
-            st.write_stream(response)
+            response_json = response.json()
+            if "choices" in response_json:
+                full_response = response_json["choices"][0]["message"]["content"]
+                st.write(full_response)
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response})
 
@@ -216,12 +234,19 @@ if st.session_state.clicked:
         temp_messages = [{"role": "user", "content": user_content}]
         with st.chat_message("assistant"):
             full_response = ""
-            response = client.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=temp_messages,
-                stream=True,
+            response = requests.post(
+                GROQ_API_URL,
+                headers=HEADERS,
+                json={
+                    "model": st.session_state["openai_model"],
+                    "messages": temp_messages
+                },
+                verify=False
             )
-            st.write_stream(response)
+            response_json = response.json()
+            if "choices" in response_json:
+                full_response = response_json["choices"][0]["message"]["content"]
+                st.write(full_response)
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response})
         st.write("Thank you for using our AI app! I hope you enjoyed it!")
